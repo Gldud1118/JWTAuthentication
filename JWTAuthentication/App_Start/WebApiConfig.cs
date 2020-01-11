@@ -1,0 +1,29 @@
+﻿using JWTAuthentication.Areas.Jwt.AuthFilter;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
+
+namespace JWTAuthentication
+{
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            // Web API 구성 및 서비스
+
+            // Web API 경로
+            config.MapHttpAttributeRoutes();
+
+            config.Filters.Add(new JwtAuthenticationFilterAttribute());
+
+            config.Filters.Add(new AuthorizeAttribute());
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+        }
+    }
+}
